@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'ops'
+
+cli = Ops::Apollo
+cli.login('apollo', 'admin')
+
+puts cli.conn
+
+puts cli.apps
+
+# logout
+cli.logout
