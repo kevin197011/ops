@@ -14,6 +14,8 @@ cli.login('apollo', 'admin')
 
 puts cli.app!('t4')
 puts cli.app_auth('apollo', 'DEV', 't4', 'application')
+puts cli.app_delete!('test1')
+puts cli.app_delete!('test2')
 
 # logout
 cli.logout

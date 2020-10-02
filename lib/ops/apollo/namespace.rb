@@ -53,16 +53,6 @@ module Ops
         end
       end
 
-      def app_delete!(app_name)
-        url = URI("#{BASE_URL}/apps/#{app_name}")
-        http = Net::HTTP.new(url.host, url.port)
-        header = {
-          'content-type': 'application/json',
-          'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
-        }
-        http.delete(url, header).code
-      end
-
       def auth_user?(_username, _env, _app_name, _namespace_name)
         'http://apollo:8070/apps/t4/namespaces/application/role_users'
       end
