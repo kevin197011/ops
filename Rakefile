@@ -8,3 +8,9 @@ task default: :spec
 task :fmt do
   system 'rubocop -a'
 end
+
+task push: :fmt do
+  system 'git add .'
+  system 'git commit -m "update"'
+  system 'git push'
+end

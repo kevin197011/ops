@@ -6,9 +6,13 @@ require 'ops'
 cli = Ops::Apollo
 cli.login('apollo', 'admin')
 
-puts cli.conn
+# puts cli.conn
+# p cli.apps
+# puts cli.app? "test1"
+# puts cli.app? "SampleApp"
+# puts cli.app_auth("admin", "123456")
 
-puts cli.apps
+puts cli.app!('t3')
 
 # logout
 cli.logout
