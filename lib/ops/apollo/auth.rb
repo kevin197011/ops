@@ -22,7 +22,8 @@ module Ops
         url = URI("#{base_url}/user/logout")
         http = Net::HTTP.new(url.host, url.port)
         header = { 'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}" }
-        http.get(url, header).code
+        http.get(url, header)
+        'logout finished!'
       end
     end
   end

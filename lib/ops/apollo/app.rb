@@ -48,7 +48,7 @@ module Ops
             'content-type': 'application/json',
             'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
           }
-          http.post(url, data, header).code
+          http.post(url, data, header)
           puts "#{app_name} action #{action} update finished!"
         end
       end
@@ -60,7 +60,7 @@ module Ops
           'content-type': 'application/json',
           'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
         }
-        http.delete(url, header).code
+        http.delete(url, header)
       end
 
       def auth_user?(_username, _env, _app_name, _namespace_name)
