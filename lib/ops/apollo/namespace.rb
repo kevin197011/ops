@@ -5,56 +5,32 @@ require 'json'
 module Ops
   module Apollo
     class << self
-      def apps
-        url = URI("#{BASE_URL}/apps")
+      def namespaces(app_name)
+        url = URI("#{BASE_URL}/apps/#{app_name}/envs/DEV/clusters/default/namespaces")
         http = Net::HTTP.new(url.host, url.port)
-        header = { 'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}" }
-        JSON.parse(http.get(url, header).read_body).to_a.map { |item| item['appId'] }
+        header = {
+          'content-type': 'application/json',
+          'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
+        }
+        JSON.parse(http.get(url, header).read_body).to_a.map { |namespace| namespace['baseInfo']['namespaceName'] }
       end
 
-      def app?(app_name)
-        apps.include?(app_name)
-      end
-
-      def app!(app_name)
-        if app?(app_name)
-          "#{app_name} already exist!"
-        else
-          url = URI("#{BASE_URL}/apps")
-          http = Net::HTTP.new(url.host, url.port)
-          data = JSON.dump({
-                             'appId' => app_name,
-                             'name' => app_name,
-                             'orgId' => 'TEST1',
-                             'orgName' => '样例部门1',
-                             'ownerName' => 'apollo',
-                             'admins' => []
-                           })
-          header = {
-            'content-type': 'application/json',
-            'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
-          }
-          http.post(url, data, header).read_body
-        end
-      end
-
-      def app_auth(username, env, app_name, namespace_name)
-        actions = %w[ModifyNamespace ReleaseNamespace]
-        actions.each do |action|
-          url = URI("#{BASE_URL}/apps/#{app_name}/envs/#{env}/namespaces/#{namespace_name}/roles/#{action}")
-          http = Net::HTTP.new(url.host, url.port)
-          data = username.to_s
-          header = {
-            'content-type': 'application/json',
-            'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
-          }
-          http.post(url, data, header).code
-          puts "#{app_name} action #{action} update finished!"
-        end
-      end
-
-      def auth_user?(_username, _env, _app_name, _namespace_name)
-        'http://apollo:8070/apps/t4/namespaces/application/role_users'
+      def namespace!(app_name, namespace_name)
+        url = URI("#{BASE_URL}/apps/#{app_name}/appnamespaces?appendNamespacePrefix=false")
+        http = Net::HTTP.new(url.host, url.port)
+        data = JSON.dump({
+                           'appId' => app_name,
+                           'name' => namespace_name,
+                           'comment' => namespace_name,
+                           'isPublic' => false,
+                           'format' => 'properties'
+                         })
+        header = {
+          'content-type': 'application/json',
+          'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
+        }
+        http.post(url, data, header).code
+        "#{app_name} namespace #{namespace_name} create finished!"
       end
     end
   end
