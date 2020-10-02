@@ -6,6 +6,9 @@ require 'ops'
 cli = Ops::Apollo
 p cli::BASE_URL
 
+cli.base_url = 'http://apollo:8070'
+puts cli.base_url
+
 cli.login('apollo', 'admin')
 
 # puts cli.conn

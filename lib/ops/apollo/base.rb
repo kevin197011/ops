@@ -1,5 +1,7 @@
 module Ops
   module Apollo
-    BASE_URL = 'http://localhost:8070'.freeze
+    class << self
+      attr_accessor :base_url
+    end
   end
 end

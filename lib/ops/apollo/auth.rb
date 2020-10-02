@@ -7,7 +7,7 @@ module Ops
       attr_accessor :conn
 
       def login(username, password)
-        url = URI("#{BASE_URL}/signin")
+        url = URI("#{base_url}/signin")
         http = Net::HTTP.new(url.host, url.port)
         data = URI.encode_www_form({
                                      'login-submit' => 'Login',
@@ -19,7 +19,7 @@ module Ops
       end
 
       def logout
-        url = URI("#{BASE_URL}/user/logout")
+        url = URI("#{base_url}/user/logout")
         http = Net::HTTP.new(url.host, url.port)
         header = { 'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}" }
         http.get(url, header).code

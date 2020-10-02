@@ -6,7 +6,7 @@ module Ops
   module Apollo
     class << self
       def apps
-        url = URI("#{BASE_URL}/apps")
+        url = URI("#{base_url}/apps")
         http = Net::HTTP.new(url.host, url.port)
         header = { 'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}" }
         JSON.parse(http.get(url, header).read_body).to_a.map { |item| item['appId'] }
@@ -20,7 +20,7 @@ module Ops
         if app?(app_name)
           "#{app_name} already exist!"
         else
-          url = URI("#{BASE_URL}/apps")
+          url = URI("#{base_url}/apps")
           http = Net::HTTP.new(url.host, url.port)
           data = JSON.dump({
                              'appId' => app_name,
@@ -41,7 +41,7 @@ module Ops
       def app_auth(username, env, app_name, namespace_name)
         actions = %w[ModifyNamespace ReleaseNamespace]
         actions.each do |action|
-          url = URI("#{BASE_URL}/apps/#{app_name}/envs/#{env}/namespaces/#{namespace_name}/roles/#{action}")
+          url = URI("#{base_url}/apps/#{app_name}/envs/#{env}/namespaces/#{namespace_name}/roles/#{action}")
           http = Net::HTTP.new(url.host, url.port)
           data = username.to_s
           header = {
@@ -54,7 +54,7 @@ module Ops
       end
 
       def app_delete!(app_name)
-        url = URI("#{BASE_URL}/apps/#{app_name}")
+        url = URI("#{base_url}/apps/#{app_name}")
         http = Net::HTTP.new(url.host, url.port)
         header = {
           'content-type': 'application/json',

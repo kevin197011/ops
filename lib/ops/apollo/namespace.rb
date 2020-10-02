@@ -6,7 +6,7 @@ module Ops
   module Apollo
     class << self
       def namespaces(app_name)
-        url = URI("#{BASE_URL}/apps/#{app_name}/envs/DEV/clusters/default/namespaces")
+        url = URI("#{base_url}/apps/#{app_name}/envs/DEV/clusters/default/namespaces")
         http = Net::HTTP.new(url.host, url.port)
         header = {
           'content-type': 'application/json',
@@ -16,7 +16,7 @@ module Ops
       end
 
       def namespace!(app_name, namespace_name)
-        url = URI("#{BASE_URL}/apps/#{app_name}/appnamespaces?appendNamespacePrefix=false")
+        url = URI("#{base_url}/apps/#{app_name}/appnamespaces?appendNamespacePrefix=false")
         http = Net::HTTP.new(url.host, url.port)
         data = JSON.dump({
                            'appId' => app_name,
