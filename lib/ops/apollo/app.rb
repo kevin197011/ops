@@ -38,8 +38,23 @@ module Ops
         end
       end
 
-      def app_auth(username, env, _app_name, _namespace_name)
-        p username, env
+      def app_auth(username, env, app_name, namespace_name)
+        actions = %w[ModifyNamespace ReleaseNamespace]
+        actions.each do |action|
+          url = URI("#{BASE_URL}/apps/#{app_name}/envs/#{env}/namespaces/#{namespace_name}/roles/#{action}")
+          http = Net::HTTP.new(url.host, url.port)
+          data = username.to_s
+          header = {
+            'content-type': 'application/json',
+            'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
+          }
+          http.post(url, data, header).code
+          puts "#{app_name} action #{action} update finished!"
+        end
+      end
+
+      def auth_user?(_username, _env, _app_name, _namespace_name)
+        'http://apollo:8070/apps/t4/namespaces/application/role_users'
       end
     end
   end

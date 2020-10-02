@@ -12,7 +12,8 @@ cli.login('apollo', 'admin')
 # puts cli.app? "SampleApp"
 # puts cli.app_auth("admin", "123456")
 
-puts cli.app!('t3')
+puts cli.app!('t4')
+puts cli.app_auth('apollo', 'DEV', 't4', 'application')
 
 # logout
 cli.logout
