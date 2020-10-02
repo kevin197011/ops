@@ -21,7 +21,9 @@ puts cli.conn
 # puts cli.namespace!('t4', 'app1')
 # p cli.namespaces('t4')
 
-p cli.app_master_users('t4')
+p cli.app_master_users?('t4', 'apollo')
+p cli.app_user?('t4', 'application', 'DEV', 'apollo')
+cli.app_revoke!('t4', 'application', 'DEV', 'apollo')
 
 # logout
 cli.logout

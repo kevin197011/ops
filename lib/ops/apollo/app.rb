@@ -53,7 +53,7 @@ module Ops
         end
       end
 
-      def app_revoke(app_name, namespace_name, env_name, username)
+      def app_revoke!(app_name, namespace_name, env_name, username)
         if app_namespace_env_users?(app_name, namespace_name, env_name, username)
           actions = %w[ModifyNamespace ReleaseNamespace]
           actions.each do |action|
@@ -101,7 +101,7 @@ module Ops
         http = Net::HTTP.new(uri.host, uri.port)
         header = { 'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}" }
         masters = JSON.parse(http.get(uri, header).read_body).to_hash['masterUsers'].map { |item| item['userId'] }
-        if master.include?(username)
+        if masters.include?(username)
           true
         else
           false
@@ -128,8 +128,8 @@ module Ops
         http = Net::HTTP.new(uri.host, uri.port)
         header = { 'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}" }
         users = JSON.parse(http.get(uri, header).read_body).to_hash
-        user_modify_status = (users['modifyRoleUsers'].map { |user| user['userId']}).include?(username)
-        user_release_status = (users['releaseRoleUsers'].map { |user| user['userId']}).include?(username)
+        user_modify_status = (users['modifyRoleUsers'].map { |user| user['userId'] }).include?(username)
+        user_release_status = (users['releaseRoleUsers'].map { |user| user['userId'] }).include?(username)
         if user_modify_status && user_release_status
           true
         else
