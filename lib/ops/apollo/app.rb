@@ -82,13 +82,13 @@ module Ops
       end
 
       def app_user?(app_name, namespace_name, env_name, username)
-        if app_master_users?(app_name, username)
+        if app_master_user?(app_name, username)
           puts "#{username} in #{app_name} is master!"
           true
-        elsif app_namespace_all_env_users?(app_name, namespace_name, username)
+        elsif app_namespace_all_env_user?(app_name, namespace_name, username)
           puts "#{username} in #{app_name} all env is manager!"
           true
-        elsif app_namespace_env_users?(app_name, namespace_name, env_name, username)
+        elsif app_namespace_env_user?(app_name, namespace_name, env_name, username)
           puts "#{username} in #{app_name} #{env_name} env is ok!"
           true
         else
@@ -96,7 +96,7 @@ module Ops
         end
       end
 
-      def app_master_users?(app_name, username)
+      def app_master_user?(app_name, username)
         uri = URI("#{base_uri}/apps/#{app_name}/role_users")
         http = Net::HTTP.new(uri.host, uri.port)
         header = { 'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}" }
@@ -108,7 +108,7 @@ module Ops
         end
       end
 
-      def app_namespace_all_env_users?(app_name, namespace_name, username)
+      def app_namespace_all_env_user?(app_name, namespace_name, username)
         uri = URI("#{base_uri}/apps/#{app_name}/namespaces/#{namespace_name}/role_users")
         http = Net::HTTP.new(uri.host, uri.port)
         header = { 'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}" }
@@ -123,7 +123,7 @@ module Ops
         end
       end
 
-      def app_namespace_env_users?(app_name, namespace_name, env_name, username)
+      def app_namespace_env_user?(app_name, namespace_name, env_name, username)
         uri = URI("#{base_uri}/apps/#{app_name}/envs/#{env_name}/namespaces/#{namespace_name}/role_users")
         http = Net::HTTP.new(uri.host, uri.port)
         header = { 'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}" }
