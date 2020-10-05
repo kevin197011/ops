@@ -1,6 +1,3 @@
-require 'net/http'
-require 'uri'
-
 module Ops
   module Apollo
     class << self
