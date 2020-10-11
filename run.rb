@@ -4,6 +4,8 @@
 require 'bundler/setup'
 require 'ops'
 
+puts Ops::VERSION
+
 cli = Ops::Apollo
 
 cli.base_uri = 'http://apollo:8070'
