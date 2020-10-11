@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Ops do
   it 'has a version number' do
     expect(Ops::VERSION).not_to be nil
