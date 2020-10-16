@@ -8,7 +8,7 @@ puts Ops::VERSION
 
 cli = Ops::Apollo
 
-cli.base_uri = 'http://apollo:8070'
+cli.base_uri = 'http://norton:8070'
 puts cli.base_uri
 
 cli.login('apollo', 'admin')
@@ -24,7 +24,7 @@ puts cli.conn
 # puts cli.namespace!('t4', 'app1')
 # p cli.namespaces('t4')
 
-p cli.app_master_users?('t4', 'apollo')
+p cli.app_master_user?('t4', 'apollo')
 p cli.app_user?('t4', 'application', 'DEV', 'apollo')
 cli.app_revoke!('t4', 'application', 'DEV', 'apollo')
 

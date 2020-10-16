@@ -28,7 +28,7 @@ module Ops
           'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
         }
         http.post(uri, params, header).code
-        "#{app_name} namespace #{namespace_name} create finished!"
+        puts "#{app_name} namespace #{namespace_name} create successed!"
       end
 
       def empty_value?(app_name, env_name, namespace_name); end

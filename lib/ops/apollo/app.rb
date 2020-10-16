@@ -33,10 +33,11 @@ module Ops
             'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
           }
           http.post(uri, params, header).read_body
+          puts "create #{app_name} successed!"
         end
       end
 
-      def app_grant(username, env_name, app_name, namespace_name)
+      def app_grant!(env_name, app_name, namespace_name, username)
         actions = %w[ModifyNamespace ReleaseNamespace]
         actions.each do |action|
           uri = URI("#{base_uri}/apps/#{app_name}/envs/#{env_name}/namespaces/#{namespace_name}/roles/#{action}")
@@ -47,12 +48,12 @@ module Ops
             'Cookie': "NG_TRANSLATE_LANG_KEY=en; #{conn}"
           }
           http.post(uri, params, header)
-          puts "#{app_name} action #{action} update finished!"
+          puts "#{app_name} action #{action} update successed!"
         end
       end
 
-      def app_revoke!(app_name, namespace_name, env_name, username)
-        if app_namespace_env_users?(app_name, namespace_name, env_name, username)
+      def app_revoke!(env_name, app_name, namespace_name, username)
+        if app_namespace_env_user?(app_name, namespace_name, env_name, username)
           actions = %w[ModifyNamespace ReleaseNamespace]
           actions.each do |action|
             uri = URI("#{base_uri}/apps/#{app_name}/envs/#{env_name}/namespaces/#{namespace_name}/roles/#{action}?user=#{username}")
