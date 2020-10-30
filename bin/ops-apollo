@@ -5,42 +5,45 @@ require 'bundler/setup'
 require 'optparse'
 require 'ops'
 
-# vars
-apollo_uri = ENV['apollo_uri']
-apollo_username = ENV['apollo_username']
-apollo_password = ENV['apollo_password']
+begin
+  # vars
+  apollo_uri = ENV['apollo_uri']
+  apollo_username = ENV['apollo_username']
+  apollo_password = ENV['apollo_password']
 
-apollo_cli = Ops::Apollo
+  apollo_cli = Ops::Apollo
 
-apollo_cli.base_uri = apollo_uri
-apollo_cli.login(apollo_username, apollo_password)
+  apollo_cli.base_uri = apollo_uri
+  apollo_cli.login(apollo_username, apollo_password)
 
-options = {}
-option_parser = OptionParser.new do |opts|
-  opts.banner = 'Ops of the command line tool.'
+  # options = {}
+  # option_parser = OptionParser.new do |opts|
+  OptionParser.new do |opts|
+    opts.banner = 'Ops of the command line tool.'
 
-  # options[:switch] = false
-  # opts.on('-S', '--switch', 'Set options as switch') do
-  #   options[:switch] = true
-  # end
+    # options[:switch] = false
+    # opts.on('-S', '--switch', 'Set options as switch') do
+    #   options[:switch] = true
+    # end
 
-  opts.on('-V', '--version', 'ops tool version') do |_value|
-    puts Ops::VERSION
-  end
+    opts.on('-V', '--version', 'ops tool version') do |_value|
+      puts Ops::VERSION
+    end
 
-  opts.on('-A appName', '--app appName', 'add app id in apollo') do |value|
-    apollo_cli.app!(value)
-  end
+    opts.on('-A appName', '--app appName', 'add app id in apollo') do |value|
+      apollo_cli.app!(value)
+    end
 
-  opts.on('-N appName,Namespace', '--namespace appName,Namespace', Array, 'add app namespace in apollo') do |value|
-    apollo_cli.namespace!(value[0], value[1])
-  end
+    opts.on('-N appName,Namespace', '--namespace appName,Namespace', Array, 'add app namespace in apollo') do |value|
+      apollo_cli.namespace!(value[0], value[1])
+    end
 
-  # ops -G dev,t1,a1,apollo
-  opts.on('-G envName,appName,namespace,username', '--grant envName,appName,namespace,username', Array, 'grant user for app namespace in apollo') do |value|
-    apollo_cli.app_grant!(value[0], value[1], value[2], value[3])
-  end
-end.parse!
-
-# logout
-apollo_cli.logout
+    # ops -G dev,t1,a1,apollo
+    opts.on('-G envName,appName,namespace,username', '--grant envName,appName,namespace,username', Array, 'grant user for app namespace in apollo') do |value|
+      apollo_cli.app_grant!(value[0], value[1], value[2], value[3])
+    end
+  end.parse!
+rescue StandardError
+  # logout
+  apollo_cli.logout
+end
